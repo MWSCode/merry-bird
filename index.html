@@ -5,27 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
 	<link rel='shortcut icon' type='image/x-icon' href='favicon.ico' /> 
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?2">
 	
     <title>Merry-Bird v.1</title>
 </head>
 <body>
     <main>
 		<div id="info_display">
-			<div id="coordinates"></div>
 			<div class="number_div_top"><span id="hearts">5</span>X <img src="assets/images/heart.png" alt="hearts"></div>
 			<div class="number_div_top">Score: <span id="score">0</span></div>
 			<div id="merry_bird_logo"></div>
 		</div>
 		<div id="game_window_frame">
 			<div id="game_window">
-				
+				<div id="obstacle"></div>
+				<div id="bird"></div>
+				<div id="buttons">
+					<div class="buttons_row">
+						<button data-direction="up" id="button_up"></button>
+					</div>
+					<div class="buttons_row_2">
+						<button data-direction="left" id="button_left"></button>
+						<button data-direction="right" id="button_right"></button>
+					</div>
+					<div class="buttons_row">
+						<button data-direction="down" id="button_down"></button>
+					</div>
+				</div>		
 			</div>
-			<div id="message_box"></div>
+
 		</div>
 		
 	</main>
-	
+
+
 	<script src="assets/js/script.js"></script>
 </body>
 </html>

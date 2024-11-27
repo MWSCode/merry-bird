@@ -36,3 +36,90 @@ main {
 	margin-top: 20px;
 }
 
+h1 {
+	font: var(--font_lilita_h1);
+	font-size: 3rem;
+	margin-bottom: 15px;
+}
+h2 {
+	font: var(--font_lilita_h1);
+	font-size: 2rem;
+	margin-bottom: 10px;
+}
+p {
+	margin-bottom: 10px;
+}
+
+#info_display {
+	display: flex;
+	gap: 15px;
+    align-items: center;
+}
+#info_display * {
+	font: var(--font_lilita_h2);
+	font-weight: 400;
+	font-style: normal;
+}
+.number_div_top {
+	margin-right: 40px;
+	display: flex;
+    align-items: center;
+}
+.number_div_top img:nth-child(2) {
+	height: 30px;
+    padding-left: 5px;
+}
+#merry_bird_logo {
+	background: url("../images/merry_bird.png") top / contain no-repeat;
+	margin-right: 30px;
+    height: 78px;
+    width: 100%;
+    position: absolute;
+}
+
+#hide {
+	display: none;
+}
+
+#game_window_frame {
+	width: 100%;
+	height: 80%;
+	border: 30px solid #006011;
+	border-radius: 20px;
+	margin-top: 5px;
+	box-sizing: border-box;
+	max-height: 576px;
+}
+#game_window {
+	background: linear-gradient(0deg, #e9f6fd, #5fc2f6);
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	user-select: none;
+	position: relative;
+	box-sizing: border-box;
+}
+
+#bird {
+	width: 80px;
+	height: 60px;
+	background: blue;
+	border-radius: 0%;
+	position: absolute;
+	top: calc(50% - 20px);
+	left: 50px;
+	z-index: 2;
+	user-select: none;
+	/*margin: 20px; key-move ro xaraab mikone cera ?! */
+}
+
+#obstacle {
+	position: absolute;
+	right: 0px;
+	top: 0;
+	width: 40px;
+	height: 20px;
+	background-color: ;
+	user-select: none;
+	background: #c03800 top /contain repeat-y ;
+}
