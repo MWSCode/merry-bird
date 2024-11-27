@@ -60,6 +60,20 @@ let bird = {
 	height: bird_div.offsetHeight,
 }
 
+// get window dimensions:
+let = game_window = document.getElementById("game_window");
+function get_window_dimensions() {
+	window_width = getComputedStyle(game_window).width;
+	window_width = Number(window_width.slice(0,-2));	// remove px
+	window_height = getComputedStyle(game_window).height;
+	window_height = Number(window_height.slice(0,-2));
+	/*positionXY.innerHTML = `bird: x: ${bird.x} - y: ${bird.y} | width: ${bird.width} height: ${bird.height}<br>
+	window: with: ${window_width} - ${window_height}`; */
+	
+}
+get_window_dimensions()
+new ResizeObserver(get_window_dimensions).observe(game_window);
+//
 
 // ### moving the player:
 // Key-control:
@@ -138,6 +152,34 @@ function move(direction) {
 	
 	bird_div.style.top = currentTopPx + "px";
 	bird_div.style.left = currentLeftPx + "px";
+}
+//
+
+// BUTTON-control
+const control_buttons = document.querySelectorAll("#buttons button");
+const mouse_fireRate = 20;
+var mouseFireTimeout = null;
+let adad = 1;
+var button_event = null;
+document.addEventListener("DOMContentLoaded", function() {
+	function startFire(e) {
+		mouseFireTimeout = setInterval(moveByButtonClick, 8);
+		//document.getElementById("buttonFire").innerHTML = "Fire"+mouseFireTimeout;
+		button_event = e;
+	}
+	
+	for (let button1 of control_buttons) {
+		button1.addEventListener("mousedown", startFire);
+		button1.addEventListener("mouseup", stopFire);
+	}
+	function moveByButtonClick() {
+		let direction = button_event.target.getAttribute("data-direction");
+		move(direction);
+	}
+});
+function stopFire() {
+	clearInterval(mouseFireTimeout);
+	//document.getElementById("buttonFire").innerHTML = "Fire stopped"+mouseFireTimeout;
 }
 //
 

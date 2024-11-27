@@ -123,3 +123,50 @@ p {
 	user-select: none;
 	background: #c03800 top /contain repeat-y ;
 }
+
+
+/* control-buttons */
+#buttons {
+	display: inline-block;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	z-index: 22;
+}
+#buttons button {
+	padding: 10px;
+	border-radius: 50%;
+	width: 3.5rem;
+	height: 3.5rem;
+	border: 2px solid black;
+	user-select: none;
+	cursor: pointer;
+	opacity: 0.5;
+}
+#buttons .buttons_row {
+	text-align: center;
+}
+#buttons .buttons_row_2 button {
+	margin: 0 20px;
+}
+#button_up {
+	margin-bottom: -10px;
+	background: url("../images/arrow_u.png") center center no-repeat ;
+	background-size: 38px 26px;
+}
+#button_down {
+	margin-top: -10px;
+	background: url("../images/arrow_d.png") center center no-repeat ;
+	background-position: 50% 57%;
+	background-size: 38px 26px;
+}
+#button_left {
+	background: url("../images/arrow_l.png") center center no-repeat ;
+	background-size: 26px 38px;
+	background-position: 47%;
+}
+#button_right {
+	background: url("../images/arrow_r.png") center center no-repeat ;
+	background-size: 26px 38px;
+	background-position: 53%;
+}
