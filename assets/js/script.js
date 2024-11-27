@@ -60,12 +60,93 @@ let bird = {
 	height: bird_div.offsetHeight,
 }
 
+
+// ### moving the player:
+// Key-control:
+let key_timeout;
+let key_pressed = "";
+let time_now = last_time = 0;
+document.addEventListener("keydown", key_pressed_func); // Arrow keys are only triggered by onkeydown, not onkeypress 
+document.addEventListener("keyup", key_released);
+let keypress_number = 0;
+function key_pressed_func(e){
+	
+	const allowedKeys = [
+		"ArrowUp",
+		"ArrowDown",
+		"ArrowLeft",
+		"ArrowRight",
+	];
+	if (key_pressed == ""){
+		key_pressed = e.key;
+	}
+	if (allowedKeys.includes(key_pressed)) {
+		//e.preventDefault();
+		switch (key_pressed) {
+			case "ArrowUp":
+				move("up");
+				break;
+			case "ArrowDown":
+				move("down");
+				break;
+			case "ArrowLeft":
+				move("left");
+				break;
+			case "ArrowRight":
+				move("right");
+				break;
+		}
+	}
+	
+	// limit the speed of key-firings
+	time_now = Date.now();
+	let time_passed = time_now - last_time;
+	if(time_passed >= 8){
+		//fps_div.innerHTML = keypress_number++;
+		//fps_div.innerHTML = key_pressed;
+		key_timeout = setTimeout(key_pressed_func, 8);
+		last_time = Date.now();
+	}
+	
+}
+function key_released(e){
+	//fps_div.innerHTML = "key_up";
+	key_pressed = "";
+	clearTimeout(key_timeout);
+}
+// Function to move Player
+function move(direction) {
+	let currentTopPx = parseInt(bird_div.offsetTop);
+	let currentLeftPx = parseInt(bird_div.offsetLeft);
+	
+	switch (direction) {
+		case "up":
+			currentTopPx -= 3;
+			break;
+		case "down":
+			currentTopPx += 3;
+			break;
+		case "left":
+			currentLeftPx -= 3;
+			break;
+		case "right":
+			currentLeftPx += 3;
+			break;
+		default:
+			alert("Not a valid input");
+	}
+	
+	bird_div.style.top = currentTopPx + "px";
+	bird_div.style.left = currentLeftPx + "px";
+}
+//
+
 // render/animation loop:
 function render(time) {
     time -= start; // time = time - start (currentTime - actual-time)
 	
-	bird.x++;
-	bird_div.style.left = bird.x+"px";
+	//bird.x++;
+	//bird_div.style.left = bird.x+"px";
 	
 }
 
