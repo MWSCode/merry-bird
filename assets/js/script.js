@@ -12,17 +12,12 @@ https://stackoverflow.com/questions/5597060/detecting-arrow-key-presses-in-javas
 
 */
 
-
-
 // variables:
 let game_window = document.getElementById("game_window");
 var bird_div = document.getElementById("bird");
-var positionXY = document.getElementById("coordinates");
 var obstacle_div = document.getElementById("obstacle");
-var fps_div = document.getElementById("fps");
 var score_span = document.getElementById("score");
 let final_score_spans = document.getElementsByClassName('final_score');
-var collisionCount_div = document.getElementById("collisionCount");
 var hearts_span = document.getElementById("hearts");
 var hearts_span2 = document.getElementById("hearts2");
 var walls_spans = document.getElementsByClassName("walls");
@@ -305,10 +300,6 @@ function stopFire() {
 }
 //
 
-/**
-* @param {string} time
-* 
-*/
 
 // get window dimensions:
 function get_window_dimensions() {
@@ -316,8 +307,6 @@ function get_window_dimensions() {
 	window_width = Number(window_width.slice(0,-2));	// remove px
 	window_height = getComputedStyle(game_window).height;
 	window_height = Number(window_height.slice(0,-2));
-	/*positionXY.innerHTML = `bird: x: ${bird.x} - y: ${bird.y} | width: ${bird.width} height: ${bird.height}<br>
-	window: with: ${window_width} - ${window_height}`; */
 	
 }
 get_window_dimensions()
@@ -347,24 +336,6 @@ function render(time) {
 	bird.x = bird.x + 10;
 	bird.width = bird.width - 20;
 	//
-	
-	//fps_div.innerHTML += (frames++) + ". " + time + " ms<br/>";
-	//fps_div.innerHTML = (frames++) + ".frame, " + time + " ms<br/>";
-	
-	/*position_leftTop = Math.round( time/3 );
-	position_leftBottom = position_leftTop+40;
-	bird_div.style.left = position_leftTop+"px";*/
-	
-	//positionXY.innerHTML = "rightTop: "+bird_div.style.left+"<br>rightBottom: "+position_rightTop;
-	
-	//obstacle_top = getComputedStyle(obstacle_div).left;
-	
-	/*obstacle_x = obstacle_div.offsetLeft;
-	obstacle_y = obstacle_div.offsetTop;
-	//obstacle_x = Number(obstacle_x.slice(0,-2));
-	obstacle_x = Math.round(obstacle_x);
-	obstacle_width = obstacle_div.offsetWidth;
-	obstacle_height = obstacle_div.offsetHeight;*/
 	
 	
 	// keep the bird inside window
