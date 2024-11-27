@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
-	<link rel='shortcut icon' type='image/x-icon' href='favicon.ico' /> 
-    <link rel="stylesheet" href="assets/css/style.css?2">
-	
-    <title>Merry-Bird v.1</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
+	<link rel="stylesheet" href="assets/css/style.css?2">
+
+	<title>Merry-Bird v.1</title>
 </head>
+
 <body>
-    <main>
+	<main>
 		<div id="info_display">
-			<div class="number_div_top"><span id="hearts">5</span>X <img src="assets/images/heart.png" alt="hearts"></div>
+			<div class="number_div_top"><span id="hearts">5</span>X <img src="assets/images/heart.png" alt="hearts">
+			</div>
 			<div class="number_div_top">Score: <span id="score">0</span></div>
 			<div id="merry_bird_logo"></div>
 		</div>
@@ -31,14 +34,71 @@
 					<div class="buttons_row">
 						<button data-direction="down" id="button_down"></button>
 					</div>
-				</div>		
+				</div>
+
+				<div id="message_box">
+					<div id="dark_bg"></div>
+					<div class="message_window" id="start_message">
+						<div class="message_content">
+							<h1>Welcome</h1>
+							<p>This game is simple and self explanatory. Just avoid the walls till the end and keep
+								Merry
+								Bird happy.</p>
+							<h2>Game control:</h2>
+							<p>You can use the arrow keys if you are using a desktop computer. Use the control buttons
+								on
+								mobile devices.</p>
+						</div>
+						<div class="message_buttons">
+							<button class="ok_button" onclick="start_game()">Play</button>
+						</div>
+					</div>
+					<div class="message_window" id="hit_message">
+						<div class="message_content">
+							<p>You hit a wall. you have <span id="hearts2"></span> hearts left.</p>
+						</div>
+						<div class="message_buttons">
+							<button onclick="continue_game()">Continue</button>
+						</div>
+					</div>
+					<div class="message_window" id="won_message">
+						<div class="message_content">
+							<h1>Congratulation!</h1>
+							<div class="flex-2column">
+								<div>
+									<p>You managed to guide Marry-Bird past <span class="walls"></span> walls and keep
+										him
+										still alive with <span class="final_score"></span> points. You deserve this gold
+										medal now!</p>
+								</div>
+								<div><img src="assets/images/gold_medal.png" alt="gold medal"></div>
+							</div>
+
+						</div>
+						<div class="message_buttons">
+							<button onclick="start_game()">Play again</button>
+						</div>
+					</div>
+					<div class="message_window" id="gameOver_message">
+						<div class="message_content">
+							<h1>Game-Over</h1>
+							<p>You have overcome <span class="walls"></span> walls. Your Score is: <span
+									class="final_score"></span>. Good look for the next time.</p>
+						</div>
+						<div class="message_buttons">
+							<button onclick="start_game()">Play again</button>
+						</div>
+					</div>
+				</div>
 			</div>
 
 		</div>
-		
+
+
 	</main>
 
 
 	<script src="assets/js/script.js?3"></script>
 </body>
+
 </html>

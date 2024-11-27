@@ -170,3 +170,91 @@ p {
 	background-size: 26px 38px;
 	background-position: 53%;
 }
+
+
+
+/* message windows */
+#dark_bg {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	opacity: 0.5;
+}
+#message_box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	z-index: 30;
+	width: 100%;
+	height: 100%;
+	
+}
+.message_window {
+	position: absolute;
+	min-width: 40%;
+	max-width: 80%;
+	min-height: 50px;
+	background-color: white;
+	box-shadow: 0 0 10px black;
+	padding: 20px;
+    border-radius: 12px;
+	display: flex;
+    flex-direction: column;
+}
+.message_window h1{
+	text-align: center;
+}
+.message_buttons{
+	text-align: center;
+	margin-top: 20px;
+}
+.message_buttons button{
+	cursor: pointer;
+	padding: 8px 40px;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1;
+    border-radius: 8px;
+    background-color: #006011;
+    color: #fff;
+    font: var(--font_lilita_h1);
+	border: 4px solid #004011;
+	border-top: 4px solid #00a91e;
+	border-left: 4px solid #00a91e;
+}
+.message_buttons button:hover{
+	background-color: #008915;
+}
+.message_buttons button:active{
+	box-shadow: inset 0 0 0.5em 0.1em #011;
+	background-color: #006011;
+	border: 4px solid #008915;
+	border-top: 4px solid #002011;
+	border-left: 4px solid #002011;
+}
+#start_message {
+	
+}
+#hit_message {
+	display:none;
+}
+#won_message {
+	display:none;
+}
+#won_message p {
+	text-align: center;
+}
+#gameOver_message {
+	display:none;
+}
+
+.flex-2column {
+	display: flex;
+	margin: 0 40px;
+    gap: 20px;
+}
+.flex-2column div {
+	align-self: center;
+}
