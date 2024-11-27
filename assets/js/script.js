@@ -2,11 +2,20 @@
 
 links:
 https://stackoverflow.com/questions/7193011/javascript-game-loop-that-runs-at-the-same-speed
+https://stackoverflow.com/questions/2440377/javascript-collision-detection
+https://stackoverflow.com/questions/9419263/how-to-play-audio
+https://stackoverflow.com/questions/9437228/html5-check-if-audio-is-playing
+https://stackoverflow.com/questions/3691461/remove-key-press-delay-in-javascript
+https://stackoverflow.com/questions/40048595/repeat-function-constantly-on-mousedown
+https://stackoverflow.com/questions/6492683/how-to-detect-divs-dimension-changed
+https://stackoverflow.com/questions/5597060/detecting-arrow-key-presses-in-javascript
 
 */
 
+
+
 // variables:
-var game_window = document.getElementById("game_window");
+let game_window = document.getElementById("game_window");
 var bird_div = document.getElementById("bird");
 var positionXY = document.getElementById("coordinates");
 var obstacle_div = document.getElementById("obstacle");
@@ -43,7 +52,110 @@ let music_speed = 1;
 let score = 0;
 //
 
-timer.start();
+function initial_values(){
+	score_span.innerHTML = "0";
+	score = 0;
+	obstacle.speed = 2;
+	obstacle.topBottom = 0;
+	obstacle.passed = 0;
+	obstacle.height = 20;
+	obstacle.y = 0;
+	obstacle.right = 0;
+	obstacle.total_count = 10;
+	
+	bird.hearts = 3;
+	
+	music_speed = 1;
+}
+
+function start_game(){
+	message_box.style.display = "none";
+	
+	initial_values();
+	
+	obstacle_div.style.height = obstacle.height+"%";
+	
+	obstacle_div.style.right = 0;
+	obstacle_div.style.top = 0;
+	
+	start = timer.start();		// get actual Time (milliseconds since 1.Jan-1970)
+	
+	sound_music.currentTime = 0;
+	sound_music2.currentTime = 0;
+	sound_music.play();
+	
+	bird_div.style.left = "50px";
+	bird_div.style.top = "calc(50% - 20px)";
+	bird.x = bird_div.offsetLeft;
+	bird.y = bird_div.offsetTop;
+}
+function game_won_message(){
+	timer.stop();
+	
+	for(let score_span of final_score_spans){
+		score_span.innerHTML = score;
+	}
+	
+	message_box.style.display = "flex";
+	for(message_win of message_windows){
+		message_win.style.display = "none";
+	}
+	won_message.style.display = "block";
+	sound_music.pause();
+	sound_music.currentTime = 0;
+	sound_music2.pause();
+	sound_music2.currentTime = 0;
+}
+function crashed_message(){
+	stopFire();
+	message_box.style.display = "flex";
+	for(message_win of message_windows){
+		message_win.style.display = "none";
+	}
+	hit_message.style.display = "block";
+}
+function continue_game(){
+	obstacle.right = 0;
+	obstacle_div.style.right = 0;
+	obstacle.y = 0;
+	obstacle_div.style.top = 0;
+	obstacle_div.style.height = "15%";
+	message_box.style.display = "none";
+	start = timer.start();		// get actual Time (milliseconds since 1.Jan-1970)
+	
+	if(music_speed == 1){
+		sound_music.currentTime = 0;
+		sound_music.play();
+	}else if(music_speed == 2){
+		sound_music2.currentTime = 0;
+		sound_music2.play();
+	}
+	
+	bird_div.style.left = "30px";
+	bird_div.style.top = "calc(50% - 20px)";
+	bird.x = bird_div.offsetLeft;
+	bird.y = bird_div.offsetTop;
+}
+function game_over_message(){
+	timer.stop();
+	
+	for(let score_span of final_score_spans){
+		score_span.innerHTML = score;
+	}
+	
+	message_box.style.display = "flex";
+	for(message_win of message_windows){
+		message_win.style.display = "none";
+	}
+	gameOver_message.style.display = "block";
+}
+
+let animation = {
+	speed: 1,
+	frame_duration: 25,
+	start(){},
+	stop(){},
+};
 
 let obstacle = {
 	x: obstacle_div.offsetLeft, 
@@ -51,6 +163,10 @@ let obstacle = {
 	width: obstacle_div.offsetWidth, 
 	height: obstacle_div.offsetHeight,
 	right: 1,
+	total_count: 5,
+	passed: 0,
+	speed: 2,
+	topBottom: 1
 }
 
 let bird = {
@@ -58,22 +174,8 @@ let bird = {
 	y: bird_div.offsetTop, 
 	width: bird_div.offsetWidth, 
 	height: bird_div.offsetHeight,
+	hearts: 5
 }
-
-// get window dimensions:
-let = game_window = document.getElementById("game_window");
-function get_window_dimensions() {
-	window_width = getComputedStyle(game_window).width;
-	window_width = Number(window_width.slice(0,-2));	// remove px
-	window_height = getComputedStyle(game_window).height;
-	window_height = Number(window_height.slice(0,-2));
-	/*positionXY.innerHTML = `bird: x: ${bird.x} - y: ${bird.y} | width: ${bird.width} height: ${bird.height}<br>
-	window: with: ${window_width} - ${window_height}`; */
-	
-}
-get_window_dimensions()
-new ResizeObserver(get_window_dimensions).observe(game_window);
-//
 
 // ### moving the player:
 // Key-control:
@@ -155,6 +257,25 @@ function move(direction) {
 }
 //
 
+// Mouse-control - kaar nemide dorost...
+//document.addEventListener("mousemove", moveByMouse);
+function moveByMouse(e){
+	let x = Math.floor(e.offsetX);
+	let y = Math.floor(e.offsetY);
+	
+	// prevent moving too fast 
+	/**/if((Math.abs(mouse_x_old) - Math.abs(x) <= 10) || (Math.abs(mouse_y_old) - Math.abs(y)) <= 10){
+		bird_div.style.left = x + "px";
+		bird_div.style.top = y + "px";
+		mouse_x_old = x;
+		mouse_y_old = y;
+	}else{
+		bird_div.style.left = x + "px";
+		bird_div.style.top = y + "px";
+	}
+}
+
+
 // BUTTON-control
 const control_buttons = document.querySelectorAll("#buttons button");
 const mouse_fireRate = 20;
@@ -175,6 +296,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	function moveByButtonClick() {
 		let direction = button_event.target.getAttribute("data-direction");
 		move(direction);
+		//document.getElementById("buttonFire").innerHTML = ++adad;
 	}
 });
 function stopFire() {
@@ -183,14 +305,201 @@ function stopFire() {
 }
 //
 
+/**
+* @param {string} time
+* 
+*/
+
+// get window dimensions:
+function get_window_dimensions() {
+	window_width = getComputedStyle(game_window).width;
+	window_width = Number(window_width.slice(0,-2));	// remove px
+	window_height = getComputedStyle(game_window).height;
+	window_height = Number(window_height.slice(0,-2));
+	/*positionXY.innerHTML = `bird: x: ${bird.x} - y: ${bird.y} | width: ${bird.width} height: ${bird.height}<br>
+	window: with: ${window_width} - ${window_height}`; */
+	
+}
+get_window_dimensions()
+new ResizeObserver(get_window_dimensions).observe(game_window);
+//
+
 // render/animation loop:
 function render(time) {
     time -= start; // time = time - start (currentTime - actual-time)
 	
-	//bird.x++;
-	//bird_div.style.left = bird.x+"px";
+	hearts_span.innerHTML = bird.hearts;
+	
+	obstacle.x = obstacle_div.offsetLeft;
+	obstacle.y = obstacle_div.offsetTop;
+	obstacle.width = obstacle_div.offsetWidth;
+	obstacle.height = obstacle_div.offsetHeight;
+	
+	bird.x = bird_div.offsetLeft;
+	bird.y = bird_div.offsetTop;
+	bird.width = bird_div.offsetWidth;
+	bird.height = bird_div.offsetHeight;
+	
+	/**/
+	// make the collision surface of the bird smaller
+	bird.y = bird.y+10;	
+	bird.height = bird.height - 20;
+	bird.x = bird.x + 10;
+	bird.width = bird.width - 20;
+	//
+	
+	//fps_div.innerHTML += (frames++) + ". " + time + " ms<br/>";
+	//fps_div.innerHTML = (frames++) + ".frame, " + time + " ms<br/>";
+	
+	/*position_leftTop = Math.round( time/3 );
+	position_leftBottom = position_leftTop+40;
+	bird_div.style.left = position_leftTop+"px";*/
+	
+	//positionXY.innerHTML = "rightTop: "+bird_div.style.left+"<br>rightBottom: "+position_rightTop;
+	
+	//obstacle_top = getComputedStyle(obstacle_div).left;
+	
+	/*obstacle_x = obstacle_div.offsetLeft;
+	obstacle_y = obstacle_div.offsetTop;
+	//obstacle_x = Number(obstacle_x.slice(0,-2));
+	obstacle_x = Math.round(obstacle_x);
+	obstacle_width = obstacle_div.offsetWidth;
+	obstacle_height = obstacle_div.offsetHeight;*/
+	
+	
+	// keep the bird inside window
+	if(bird.x == 0 || bird.x < 0){
+		bird_div.style.left = 0;
+	}else if(bird.y <= 0){
+		bird_div.style.top = 0;
+	}else if (window_width <= (bird.x+bird.width)){
+		bird_div.style.left = window_width-bird.width+"px";
+	}else if(window_height <= (bird.y+bird.height)){
+		bird_div.style.top = window_height-bird.height+"px";
+	}
+	//
+	
+	// ### create/change/move wall and speed change:
+	obstacle.right = obstacle.right+obstacle.speed+obstacle.passed;		// change wall-speed
+	obstacle_div.style.right = obstacle.right+"px";		// move the wall
+	if((obstacle.right-20) > window_width){	// when wall passed the window, create new wall:
+		obstacle.right = 0;
+		obstacle.passed++;
+		
+		window_height = Math.ceil(window_height);
+		let obstacle_max_height = Math.floor(window_height - (bird.height + (window_height / 10)));
+		let obstacle_min_height = Math.floor(window_height / 5);
+		obstacle.height = Math.floor(Math.random() * (obstacle_max_height - obstacle_min_height)) + obstacle_min_height;
+		//obstacle.height = obstacle_min_height;
+		
+		// choose top or bottom position of the wall
+		if(obstacle.topBottom == 1){
+			obstacle.y = 0;
+		}else{
+			obstacle.y = window_height - obstacle.height;
+		}
+		obstacle.topBottom = Math.round(Math.random());
+		
+		obstacle_div.style.top = obstacle.y+"px";
+		obstacle_div.style.height = obstacle.height+"px";
+		
+		score = obstacle.passed * bird.hearts;
+		score_span.innerHTML = score;
+	}
+	//
+	
+	// set music type / speed
+	if(obstacle.passed >= 5){
+		music_speed = 2;
+		sound_music.playbackRate = 1;
+		sound_music.pause();
+		sound_music.currentTime = 0;
+		
+		sound_music2.play();
+		
+	}
+	if(obstacle.passed > 2 && obstacle.passed < 5){
+		music_speed = 1;
+		sound_music.playbackRate = 2;
+		sound_music.play();
+		
+		sound_music2.pause();
+		sound_music2.currentTime = 0;
+	}
+	if(obstacle.passed >= 0 && obstacle.passed <= 2){
+		music_speed = 1;
+		sound_music.playbackRate = 1;
+		sound_music.play();
+		//positionXY.innerHTML = "1 divar raft";
+	}
+	//
+	
+	//fps_div.innerHTML = "passed walls: "+obstacle.passed;
+	
+	for(let walls_span of walls_spans){
+		walls_span.innerHTML = obstacle.passed;
+	}
+	
+	// collision detection
+	let collided = collision(bird, obstacle);
+	if(collided == !false){	// when collided
+		if(lastFrameCollision == 0){		// don't count collision if collision already happened
+			//obstacle.speed = obstacle.speed +2;
+			//collisionCount_div.innerHTML = "Collision(speed): "+obstacle.speed;
+			
+			bird_div.style.background = "blue";
+			
+			if(sound_crash.paused && !collision_soundPlayed){	// prevent repeated playbacks
+				sound_crash.play();
+				collision_soundPlayed = 1;
+				
+			}
+			
+			timer.stop();
+			sound_music.pause();
+			sound_music.currentTime = 0;
+			sound_music2.pause();
+			sound_music2.currentTime = 0;
+			
+			bird.hearts--;
+			obstacle.speed++;
+			hearts_span.innerHTML = bird.hearts;
+			hearts_span2.innerHTML = bird.hearts;
+			crashed_message();
+			
+		}
+		lastFrameCollision = 1;
+		
+	}else{
+		bird_div.style.background = 'blue';
+		collision_soundPlayed = 0;
+		lastFrameCollision = 0;
+	}
+	//
+	
+	// when won:
+	if(obstacle.passed == obstacle.total_count){
+		game_won_message();
+	}
+	//
+	
+	// when game-over:
+	if(bird.hearts <= 0){
+		game_over_message();
+	}
+	//
 	
 }
+
+function collision(a, b) {
+	return !(
+		((a.y + a.height) < (b.y)) ||
+		(a.y > (b.y + b.height)) ||
+		((a.x + a.width) < b.x) ||
+		(a.x > (b.x + b.width))
+	);
+}
+
 
 function DeltaTimer(interval) {
     var timeout;
@@ -221,3 +530,5 @@ function DeltaTimer(interval) {
         render(currentTime);
     }
 }
+
+
