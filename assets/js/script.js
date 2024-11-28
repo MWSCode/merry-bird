@@ -1,6 +1,7 @@
 /*
+Merri-Bird v.1 (c) Mamali-Workshop 11-2024
 
-links:
+used help and idea resources:
 https://stackoverflow.com/questions/7193011/javascript-game-loop-that-runs-at-the-same-speed
 https://stackoverflow.com/questions/2440377/javascript-collision-detection
 https://stackoverflow.com/questions/9419263/how-to-play-audio
@@ -9,15 +10,17 @@ https://stackoverflow.com/questions/3691461/remove-key-press-delay-in-javascript
 https://stackoverflow.com/questions/40048595/repeat-function-constantly-on-mousedown
 https://stackoverflow.com/questions/6492683/how-to-detect-divs-dimension-changed
 https://stackoverflow.com/questions/5597060/detecting-arrow-key-presses-in-javascript
-
+https://stackoverflow.com/questions/10614481/disable-double-tap-zoom-option-in-browser-on-touch-devices
 */
 
 // variables:
 let game_window = document.getElementById("game_window");
 var bird_div = document.getElementById("bird");
+var positionXY = document.getElementById("coordinates");
 var obstacle_div = document.getElementById("obstacle");
 var score_span = document.getElementById("score");
 let final_score_spans = document.getElementsByClassName('final_score');
+var collisionCount_div = document.getElementById("collisionCount");
 var hearts_span = document.getElementById("hearts");
 var hearts_span2 = document.getElementById("hearts2");
 var walls_spans = document.getElementsByClassName("walls");
@@ -35,11 +38,9 @@ let sound_music2 = document.getElementById("music_2");
 var collision_soundPlayed = 0;
 let lastFrameCollision = 0;
 
-var mouse_x_old = 0;
-var mouse_y_old = 0;
 
 // for keeping steady frame-rates and animation speed:
-var timer = new DeltaTimer(25);	// object - delay till next frame in ms (50ms = 20fps, 25ms = 40fps, 30ms = 33.33fps, 20ms = 50fps...)
+var timer = new DeltaTimer(20);	// object - delay till next frame in ms (50ms = 20fps, 25ms = 40fps, 30ms = 33.33fps, 20ms = 50fps...)
 var start = 0;
 var frames = 0;
 
@@ -73,7 +74,8 @@ function start_game(){
 	obstacle_div.style.right = 0;
 	obstacle_div.style.top = 0;
 	
-	start = timer.start();		// get actual Time (milliseconds since 1.Jan-1970)
+	//start = timer.start();		// get actual Time (milliseconds since 1.Jan-1970)
+	animation.start();
 	
 	sound_music.currentTime = 0;
 	sound_music2.currentTime = 0;
@@ -85,7 +87,8 @@ function start_game(){
 	bird.y = bird_div.offsetTop;
 }
 function game_won_message(){
-	timer.stop();
+	//timer.stop();
+	animation.stop();
 	
 	for(let score_span of final_score_spans){
 		score_span.innerHTML = score;
@@ -116,7 +119,8 @@ function continue_game(){
 	obstacle_div.style.top = 0;
 	obstacle_div.style.height = "15%";
 	message_box.style.display = "none";
-	start = timer.start();		// get actual Time (milliseconds since 1.Jan-1970)
+	//start = timer.start();		// get actual Time (milliseconds since 1.Jan-1970)
+	animation.start();
 	
 	if(music_speed == 1){
 		sound_music.currentTime = 0;
@@ -132,7 +136,8 @@ function continue_game(){
 	bird.y = bird_div.offsetTop;
 }
 function game_over_message(){
-	timer.stop();
+	//timer.stop();
+	animation.stop();
 	
 	for(let score_span of final_score_spans){
 		score_span.innerHTML = score;
@@ -145,11 +150,16 @@ function game_over_message(){
 	gameOver_message.style.display = "block";
 }
 
+let animationInverval = null;
 let animation = {
 	speed: 1,
 	frame_duration: 25,
-	start(){},
-	stop(){},
+	start(){
+		animationInverval = setInterval(animation_loop_func, this.frame_duration);
+	},
+	stop(){
+		clearInterval(animationInverval);
+	},
 };
 
 let obstacle = {
@@ -177,53 +187,22 @@ let bird = {
 let key_timeout;
 let key_pressed = "";
 let time_now = last_time = 0;
-document.addEventListener("keydown", key_pressed_func); // Arrow keys are only triggered by onkeydown, not onkeypress 
+document.addEventListener("keydown", key_event); // Arrow keys are only triggered by onkeydown, not onkeypress 
 document.addEventListener("keyup", key_released);
 let keypress_number = 0;
-function key_pressed_func(e){
+
+function key_event(e){
+	//return e;
+	key_pressed = e.key;
 	
-	const allowedKeys = [
-		"ArrowUp",
-		"ArrowDown",
-		"ArrowLeft",
-		"ArrowRight",
-	];
-	if (key_pressed == ""){
-		key_pressed = e.key;
-	}
-	if (allowedKeys.includes(key_pressed)) {
-		//e.preventDefault();
-		switch (key_pressed) {
-			case "ArrowUp":
-				move("up");
-				break;
-			case "ArrowDown":
-				move("down");
-				break;
-			case "ArrowLeft":
-				move("left");
-				break;
-			case "ArrowRight":
-				move("right");
-				break;
-		}
-	}
-	
-	// limit the speed of key-firings
-	time_now = Date.now();
-	let time_passed = time_now - last_time;
-	if(time_passed >= 8){
-		//fps_div.innerHTML = keypress_number++;
-		//fps_div.innerHTML = key_pressed;
-		key_timeout = setTimeout(key_pressed_func, 8);
-		last_time = Date.now();
-	}
 	
 }
+
+
 function key_released(e){
-	//fps_div.innerHTML = "key_up";
+	
 	key_pressed = "";
-	clearTimeout(key_timeout);
+	//clearTimeout(key_timeout);
 }
 // Function to move Player
 function move(direction) {
@@ -232,16 +211,16 @@ function move(direction) {
 	
 	switch (direction) {
 		case "up":
-			currentTopPx -= 3;
+			currentTopPx -= 8;
 			break;
 		case "down":
-			currentTopPx += 3;
+			currentTopPx += 8;
 			break;
 		case "left":
-			currentLeftPx -= 3;
+			currentLeftPx -= 8;
 			break;
 		case "right":
-			currentLeftPx += 3;
+			currentLeftPx += 8;
 			break;
 		default:
 			alert("Not a valid input");
@@ -252,15 +231,15 @@ function move(direction) {
 }
 //
 
+
 // BUTTON-control
 const control_buttons = document.querySelectorAll("#buttons button");
-const mouse_fireRate = 20;
-var mouseFireTimeout = null;
+let mouseFireTimeout = null;
 let adad = 1;
 var button_event = null;
 document.addEventListener("DOMContentLoaded", function() {
 	function startFire(e) {
-		mouseFireTimeout = setInterval(moveByButtonClick, 8);
+		mouseFireTimeout = setInterval(moveByButtonClick, 20);
 		//document.getElementById("buttonFire").innerHTML = "Fire"+mouseFireTimeout;
 		button_event = e;
 	}
@@ -268,7 +247,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	for (let button1 of control_buttons) {
 		button1.addEventListener("mousedown", startFire);
 		button1.addEventListener("mouseup", stopFire);
-
+		
 		button1.addEventListener("ontouchstart", startFire);
 		button1.addEventListener("ontouchend", stopFire);
 	}
@@ -284,6 +263,17 @@ function stopFire() {
 }
 //
 
+/**
+* @param {string} time
+* 
+*/
+
+const allowedKeys = [
+	"ArrowUp",
+	"ArrowDown",
+	"ArrowLeft",
+	"ArrowRight",
+];
 
 // get window dimensions:
 function get_window_dimensions() {
@@ -291,6 +281,8 @@ function get_window_dimensions() {
 	window_width = Number(window_width.slice(0,-2));	// remove px
 	window_height = getComputedStyle(game_window).height;
 	window_height = Number(window_height.slice(0,-2));
+	/*positionXY.innerHTML = `bird: x: ${bird.x} - y: ${bird.y} | width: ${bird.width} height: ${bird.height}<br>
+	window: with: ${window_width} - ${window_height}`; */
 	
 }
 get_window_dimensions()
@@ -298,8 +290,33 @@ new ResizeObserver(get_window_dimensions).observe(game_window);
 //
 
 // render/animation loop:
-function render(time) {
-    time -= start; // time = time - start (currentTime - actual-time)
+function animation_loop_func() {
+    // time -= start; // time = time - start (currentTime - actual-time)
+	
+	// processing player movement:
+	if (key_pressed != ""){
+		//key_pressed = e.key;
+		
+		if (allowedKeys.includes(key_pressed)) {
+			//e.preventDefault();
+			switch (key_pressed) {
+				case "ArrowUp":
+					move("up");
+					break;
+				case "ArrowDown":
+					move("down");
+					break;
+				case "ArrowLeft":
+					move("left");
+					break;
+				case "ArrowRight":
+					move("right");
+					break;
+			}
+		}		
+	}
+
+
 	
 	hearts_span.innerHTML = bird.hearts;
 	
@@ -313,14 +330,7 @@ function render(time) {
 	bird.width = bird_div.offsetWidth;
 	bird.height = bird_div.offsetHeight;
 	
-	/*
-	// make the collision surface of the bird smaller
-	bird.y = bird.y+10;	
-	bird.height = bird.height - 20;
-	bird.x = bird.x + 10;
-	bird.width = bird.width - 20;
-	//
-	*/
+	
 	
 	// keep the bird inside window
 	if(bird.x == 0 || bird.x < 0){
@@ -389,7 +399,6 @@ function render(time) {
 	}
 	//
 	
-	//fps_div.innerHTML = "passed walls: "+obstacle.passed;
 	
 	for(let walls_span of walls_spans){
 		walls_span.innerHTML = obstacle.passed;
@@ -402,7 +411,7 @@ function render(time) {
 			//obstacle.speed = obstacle.speed +2;
 			//collisionCount_div.innerHTML = "Collision(speed): "+obstacle.speed;
 			
-			bird_div.style.background = "blue";
+			bird_div.style.background = "url('assets/images/merry-bird-crash.gif')";
 			
 			if(sound_crash.paused && !collision_soundPlayed){	// prevent repeated playbacks
 				sound_crash.play();
@@ -410,7 +419,8 @@ function render(time) {
 				
 			}
 			
-			timer.stop();
+			//timer.stop();
+			animation.stop();
 			sound_music.pause();
 			sound_music.currentTime = 0;
 			sound_music2.pause();
@@ -426,7 +436,7 @@ function render(time) {
 		lastFrameCollision = 1;
 		
 	}else{
-		bird_div.style.background = 'blue';
+		bird_div.style.background = 'url("assets/images/merry-bird.gif")';
 		collision_soundPlayed = 0;
 		lastFrameCollision = 0;
 	}
@@ -485,5 +495,3 @@ function DeltaTimer(interval) {
         render(currentTime);
     }
 }
-
-
