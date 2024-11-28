@@ -318,7 +318,6 @@ function animation_loop_func() {
 		let direction = button_event.target.getAttribute("data-direction");
 		move(direction);
 	}
-	test_div.innerHTML = button_event;
 	//
 
 	hearts_span.innerHTML = bird.hearts;
