@@ -268,6 +268,9 @@ document.addEventListener("DOMContentLoaded", function() {
 	for (let button1 of control_buttons) {
 		button1.addEventListener("mousedown", startFire);
 		button1.addEventListener("mouseup", stopFire);
+
+		button1.addEventListener("ontouchstart", startFire);
+		button1.addEventListener("ontouchend", stopFire);
 	}
 	function moveByButtonClick() {
 		let direction = button_event.target.getAttribute("data-direction");
