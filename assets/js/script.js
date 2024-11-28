@@ -18,6 +18,7 @@ let game_window = document.getElementById("game_window");
 var bird_div = document.getElementById("bird");
 var positionXY = document.getElementById("coordinates");
 var obstacle_div = document.getElementById("obstacle");
+var test_div = document.getElementById("test");
 var score_span = document.getElementById("score");
 let final_score_spans = document.getElementsByClassName('final_score');
 var collisionCount_div = document.getElementById("collisionCount");
@@ -38,14 +39,15 @@ let sound_music2 = document.getElementById("music_2");
 var collision_soundPlayed = 0;
 let lastFrameCollision = 0;
 
-
-// for keeping steady frame-rates and animation speed:
-var timer = new DeltaTimer(20);	// object - delay till next frame in ms (50ms = 20fps, 25ms = 40fps, 30ms = 33.33fps, 20ms = 50fps...)
-var start = 0;
-var frames = 0;
-
 let music_speed = 1;
 let score = 0;
+
+const allowedKeys = [
+	"ArrowUp",
+	"ArrowDown",
+	"ArrowLeft",
+	"ArrowRight",
+];
 //
 
 function initial_values(){
@@ -57,99 +59,15 @@ function initial_values(){
 	obstacle.height = 20;
 	obstacle.y = 0;
 	obstacle.right = 0;
-	obstacle.total_count = 10;
+	obstacle.total_count = 15;
 	
 	bird.hearts = 3;
 	
 	music_speed = 1;
 }
 
-function start_game(){
-	message_box.style.display = "none";
-	
-	initial_values();
-	
-	obstacle_div.style.height = obstacle.height+"%";
-	
-	obstacle_div.style.right = 0;
-	obstacle_div.style.top = 0;
-	
-	//start = timer.start();		// get actual Time (milliseconds since 1.Jan-1970)
-	animation.start();
-	
-	sound_music.currentTime = 0;
-	sound_music2.currentTime = 0;
-	sound_music.play();
-	
-	bird_div.style.left = "50px";
-	bird_div.style.top = "calc(50% - 20px)";
-	bird.x = bird_div.offsetLeft;
-	bird.y = bird_div.offsetTop;
-}
-function game_won_message(){
-	//timer.stop();
-	animation.stop();
-	
-	for(let score_span of final_score_spans){
-		score_span.innerHTML = score;
-	}
-	
-	message_box.style.display = "flex";
-	for(message_win of message_windows){
-		message_win.style.display = "none";
-	}
-	won_message.style.display = "block";
-	sound_music.pause();
-	sound_music.currentTime = 0;
-	sound_music2.pause();
-	sound_music2.currentTime = 0;
-}
-function crashed_message(){
-	stopFire();
-	message_box.style.display = "flex";
-	for(message_win of message_windows){
-		message_win.style.display = "none";
-	}
-	hit_message.style.display = "block";
-}
-function continue_game(){
-	obstacle.right = 0;
-	obstacle_div.style.right = 0;
-	obstacle.y = 0;
-	obstacle_div.style.top = 0;
-	obstacle_div.style.height = "15%";
-	message_box.style.display = "none";
-	//start = timer.start();		// get actual Time (milliseconds since 1.Jan-1970)
-	animation.start();
-	
-	if(music_speed == 1){
-		sound_music.currentTime = 0;
-		sound_music.play();
-	}else if(music_speed == 2){
-		sound_music2.currentTime = 0;
-		sound_music2.play();
-	}
-	
-	bird_div.style.left = "30px";
-	bird_div.style.top = "calc(50% - 20px)";
-	bird.x = bird_div.offsetLeft;
-	bird.y = bird_div.offsetTop;
-}
-function game_over_message(){
-	//timer.stop();
-	animation.stop();
-	
-	for(let score_span of final_score_spans){
-		score_span.innerHTML = score;
-	}
-	
-	message_box.style.display = "flex";
-	for(message_win of message_windows){
-		message_win.style.display = "none";
-	}
-	gameOver_message.style.display = "block";
-}
-
+// for the animation loop:
+// frame_duration in ms: (50 = 20fps, 25 = 40fps, 30 = 33.33fps, 20 = 50fps...)
 let animationInverval = null;
 let animation = {
 	speed: 1,
@@ -161,6 +79,7 @@ let animation = {
 		clearInterval(animationInverval);
 	},
 };
+//
 
 let obstacle = {
 	x: obstacle_div.offsetLeft, 
@@ -182,25 +101,118 @@ let bird = {
 	hearts: 5
 }
 
+
+// full-screen for mobile devices:
+var elem = document.getElementById("body_fc"); 
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}
+
+
+function start_game(){
+	message_box.style.display = "none";
+	
+	initial_values();
+	
+	obstacle_div.style.height = obstacle.height+"%";
+	
+	obstacle_div.style.right = 0;
+	obstacle_div.style.top = 0;
+	
+	animation.start();
+	
+	sound_music.currentTime = 0;
+	sound_music2.currentTime = 0;
+	sound_music.play();
+	
+	bird_div.style.left = "50px";
+	bird_div.style.top = "calc(50% - 20px)";
+	bird.x = bird_div.offsetLeft;
+	bird.y = bird_div.offsetTop;
+}
+function game_won_message(){
+	animation.stop();
+	
+	for(let score_span of final_score_spans){
+		score_span.innerHTML = score;
+	}
+	
+	message_box.style.display = "flex";
+	for(let message_win of message_windows){
+		message_win.style.display = "none";
+	}
+	won_message.style.display = "block";
+	sound_music.pause();
+	sound_music.currentTime = 0;
+	sound_music2.pause();
+	sound_music2.currentTime = 0;
+}
+function crashed_message(){
+	stopFire();
+	message_box.style.display = "flex";
+	for(let message_win of message_windows){
+		message_win.style.display = "none";
+	}
+	hit_message.style.display = "block";
+}
+function continue_game(){
+	obstacle.right = 0;
+	obstacle_div.style.right = 0;
+	obstacle.y = 0;
+	obstacle_div.style.top = 0;
+	obstacle_div.style.height = "15%";
+	message_box.style.display = "none";
+	
+	animation.start();
+	
+	if(music_speed == 1){
+		sound_music.currentTime = 0;
+		sound_music.play();
+	}else if(music_speed == 2){
+		sound_music2.currentTime = 0;
+		sound_music2.play();
+	}
+	
+	bird_div.style.left = "30px";
+	bird_div.style.top = "calc(50% - 20px)";
+	bird.x = bird_div.offsetLeft;
+	bird.y = bird_div.offsetTop;
+}
+function game_over_message(){
+	animation.stop();
+	
+	for(let score_span of final_score_spans){
+		score_span.innerHTML = score;
+	}
+	
+	message_box.style.display = "flex";
+	for(let message_win of message_windows){
+		message_win.style.display = "none";
+	}
+	gameOver_message.style.display = "block";
+}
+
+
 // ### moving the player:
 // Key-control:
-let key_timeout;
 let key_pressed = "";
-let time_now = last_time = 0;
+
 document.addEventListener("keydown", key_event); // Arrow keys are only triggered by onkeydown, not onkeypress 
 document.addEventListener("keyup", key_released);
-let keypress_number = 0;
 
 function key_event(e){
 	//return e;
 	key_pressed = e.key;
-	
-	
 }
 
-
 function key_released(e){
-	
+	//test_div.innerHTML = "released";
 	key_pressed = "";
 	//clearTimeout(key_timeout);
 }
@@ -231,16 +243,13 @@ function move(direction) {
 }
 //
 
-
 // BUTTON-control
 const control_buttons = document.querySelectorAll("#buttons button");
 let mouseFireTimeout = null;
-let adad = 1;
 var button_event = null;
 document.addEventListener("DOMContentLoaded", function() {
 	function startFire(e) {
 		mouseFireTimeout = setInterval(moveByButtonClick, 20);
-		//document.getElementById("buttonFire").innerHTML = "Fire"+mouseFireTimeout;
 		button_event = e;
 	}
 	
@@ -254,44 +263,30 @@ document.addEventListener("DOMContentLoaded", function() {
 	function moveByButtonClick() {
 		let direction = button_event.target.getAttribute("data-direction");
 		move(direction);
-		//document.getElementById("buttonFire").innerHTML = ++adad;
 	}
 });
 function stopFire() {
 	clearInterval(mouseFireTimeout);
-	//document.getElementById("buttonFire").innerHTML = "Fire stopped"+mouseFireTimeout;
 }
 //
 
-/**
-* @param {string} time
-* 
-*/
-
-const allowedKeys = [
-	"ArrowUp",
-	"ArrowDown",
-	"ArrowLeft",
-	"ArrowRight",
-];
 
 // get window dimensions:
+let window_width = null;
+let window_height = null;
 function get_window_dimensions() {
 	window_width = getComputedStyle(game_window).width;
 	window_width = Number(window_width.slice(0,-2));	// remove px
 	window_height = getComputedStyle(game_window).height;
 	window_height = Number(window_height.slice(0,-2));
-	/*positionXY.innerHTML = `bird: x: ${bird.x} - y: ${bird.y} | width: ${bird.width} height: ${bird.height}<br>
-	window: with: ${window_width} - ${window_height}`; */
 	
 }
-get_window_dimensions()
-new ResizeObserver(get_window_dimensions).observe(game_window);
+get_window_dimensions();
+let resize_observer = new ResizeObserver(get_window_dimensions).observe(game_window);
 //
 
 // render/animation loop:
 function animation_loop_func() {
-    // time -= start; // time = time - start (currentTime - actual-time)
 	
 	// processing player movement:
 	if (key_pressed != ""){
@@ -315,8 +310,6 @@ function animation_loop_func() {
 			}
 		}		
 	}
-
-
 	
 	hearts_span.innerHTML = bird.hearts;
 	
@@ -329,8 +322,6 @@ function animation_loop_func() {
 	bird.y = bird_div.offsetTop;
 	bird.width = bird_div.offsetWidth;
 	bird.height = bird_div.offsetHeight;
-	
-	
 	
 	// keep the bird inside window
 	if(bird.x == 0 || bird.x < 0){
@@ -374,7 +365,7 @@ function animation_loop_func() {
 	//
 	
 	// set music type / speed
-	if(obstacle.passed >= 5){
+	if(obstacle.passed >= 10){
 		music_speed = 2;
 		sound_music.playbackRate = 1;
 		sound_music.pause();
@@ -383,7 +374,7 @@ function animation_loop_func() {
 		sound_music2.play();
 		
 	}
-	if(obstacle.passed > 2 && obstacle.passed < 5){
+	if(obstacle.passed > 5 && obstacle.passed < 10){
 		music_speed = 1;
 		sound_music.playbackRate = 2;
 		sound_music.play();
@@ -391,14 +382,13 @@ function animation_loop_func() {
 		sound_music2.pause();
 		sound_music2.currentTime = 0;
 	}
-	if(obstacle.passed >= 0 && obstacle.passed <= 2){
+	if(obstacle.passed >= 0 && obstacle.passed <= 5){
 		music_speed = 1;
 		sound_music.playbackRate = 1;
 		sound_music.play();
 		//positionXY.innerHTML = "1 divar raft";
 	}
 	//
-	
 	
 	for(let walls_span of walls_spans){
 		walls_span.innerHTML = obstacle.passed;
@@ -408,8 +398,6 @@ function animation_loop_func() {
 	let collided = collision(bird, obstacle);
 	if(collided == !false){	// when collided
 		if(lastFrameCollision == 0){		// don't count collision if collision already happened
-			//obstacle.speed = obstacle.speed +2;
-			//collisionCount_div.innerHTML = "Collision(speed): "+obstacle.speed;
 			
 			bird_div.style.background = "url('assets/images/merry-bird-crash.gif')";
 			
@@ -463,35 +451,4 @@ function collision(a, b) {
 		((a.x + a.width) < b.x) ||
 		(a.x > (b.x + b.width))
 	);
-}
-
-
-function DeltaTimer(interval) {
-    var timeout;
-    var lastTime;
-
-    this.start = start;
-    this.stop = stop;
-
-    function start() {
-        timeout = setTimeout(loop, 0);	// returns id
-        lastTime = Date.now();
-        return lastTime;
-    }
-
-    function stop() {
-        clearTimeout(timeout);
-        return lastTime;
-    }
-
-    function loop() {
-        var currentTime = Date.now();
-		/**/
-        var deltaTime = currentTime - lastTime;
-        var delay = Math.max(interval - deltaTime, 0);
-        timeout = setTimeout(loop, delay);
-        lastTime = currentTime + delay;
-		
-        render(currentTime);
-    }
 }

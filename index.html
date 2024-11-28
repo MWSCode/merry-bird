@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="This is Merry-Bird. A simple Javascript game for Webbrowsers.">
 	<meta name="keywords" content="Merry-Bird, Browser game, online game,">
-	
-	<link rel='shortcut icon' type='image/x-icon' href='favicon.ico'> 
-    <link rel="stylesheet" href="assets/css/style.css">
-	
-    <title>Merry-Bird v.1</title>
+
+	<link rel='shortcut icon' type='image/x-icon' href='favicon.ico'>
+	<link rel="stylesheet" href="assets/css/style.css">
+
+	<title>Merry-Bird v.1</title>
 </head>
-<body>
-    <main>
+
+<body id="body_fc">
+	<main>
 		<div id="info_display">
-			<div class="number_div_top"><span id="hearts"></span>X <img src="assets/images/heart.png" alt="hearts"></div>
+			<div class="number_div_top"><span id="hearts"></span>X <img src="assets/images/heart.png" alt="hearts">
+			</div>
 			<div class="number_div_top">Score: <span id="score">0</span></div>
 			<div id="merry_bird_logo"></div>
 			<div id="test"></div>
@@ -41,11 +44,14 @@
 					<div class="message_window" id="start_message">
 						<div class="message_content">
 							<h1>Welcome</h1>
-							<p>This game is simple and self explanatory. Just avoid the walls till the end and keep Merry Bird happy.</p>
+							<p>This game is simple and self explanatory. Just avoid the walls till the end and keep
+								Merry Bird happy :-)</p>
 							<h2>Game control:</h2>
-							<p>You can use the arrow keys if you are using a desktop computer. Use the control buttons on mobile devices.</p>
-							<p>Play this game in Fullscreen-mode on mobile devices -> <button class="fullscreen" onclick="openFullscreen()">Fullscreen</button></p>
-							
+							<p>You can use the arrow keys if you are using a desktop computer. Use the control buttons
+								on mobile devices.</p>
+							<p>Play this game in Fullscreen-mode on mobile devices -> <button class="fullscreen"
+									onclick="openFullscreen()">Fullscreen</button></p>
+
 						</div>
 						<div class="message_buttons">
 							<button class="ok_button" onclick="start_game()">Play</button>
@@ -63,10 +69,14 @@
 						<div class="message_content">
 							<h1>Congratulation!</h1>
 							<div class="flex-2column">
-								<div><p>You managed to guide Marry-Bird past <span class="walls"></span> walls and keep him still alive with <span class="final_score"></span> points. You deserve this gold medal now!</p></div>
+								<div>
+									<p>You managed to guide Marry-Bird past <span class="walls"></span> walls and keep
+										him still alive with <span class="final_score"></span> points. You deserve this
+										gold medal now!</p>
+								</div>
 								<div><img src="assets/images/gold_medal.png" alt="gold medal"></div>
 							</div>
-							
+
 						</div>
 						<div class="message_buttons">
 							<button onclick="start_game()">Play again</button>
@@ -74,21 +84,33 @@
 					</div>
 					<div class="message_window" id="gameOver_message">
 						<div class="message_content">
-							<h1>Game-Over</h1>
-							<p>You have overcome <span class="walls"></span> walls. Your Score is: <span class="final_score"></span>. Good look for the next time.</p>
+							<h1>Game Over</h1>
+							<p>You have overcome <span class="walls"></span> walls. Your Score is: <span
+									class="final_score"></span>. Good look for the next time.</p>
 						</div>
 						<div class="message_buttons">
 							<button onclick="start_game()">Play again</button>
 						</div>
 					</div>
-				</div>				
+				</div>
 			</div>
-			
+
 		</div>
-		
+
 		<div class="footer">
 			Merry-Bird v.1 - © 2024 Mamali-Workshop<br>
-			 <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><span property="dct:title">Merry-Bird</span> is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-ND 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1" alt=""></a></p> 
+			<p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><span
+					property="dct:title">Merry-Bird</span> is licensed under <a
+					href="https://creativecommons.org/licenses/by-nc-nd/4.0/?ref=chooser-v1" target="_blank"
+					rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-ND 4.0<img
+						style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+						src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img
+						style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+						src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img
+						style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+						src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img
+						style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+						src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1" alt=""></a></p>
 		</div>
 	</main>
 	<audio controls loop id="music">
@@ -103,8 +125,8 @@
 		<source src="crash.mp3" type="audio/mp3">
 		Your browser does not support the audio tag.
 	</audio>
-	
-	
+
 	<script src="assets/js/script.js"></script>
 </body>
+
 </html>

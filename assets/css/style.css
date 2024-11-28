@@ -104,7 +104,7 @@ p {
 }
 
 #bird {
-	width: 80px;
+	width: 86px;
 	height: 60px;
 	background: url(../images/merry-bird.gif);
 	border-radius: 0%;
@@ -113,7 +113,6 @@ p {
 	left: 50px;
 	z-index: 2;
 	user-select: none;
-	/*margin: 20px; key-move ro xaraab mikone cera ?! */
 }
 
 #obstacle {
