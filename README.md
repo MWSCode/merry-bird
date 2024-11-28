@@ -13,7 +13,8 @@ This game is suitable for all enthusiasts of all ages.
 ## Specifications
 
 - This game works with all modern Webbrowsers that support Javascript ES6 version and HTML5+CSS3.
-- This layout  design is responsive and works on mobile and desktop devices. On mobile devices I recommend to use Landscape mode (Horizontal orientation).
+- Your mobile web browser should also support js touch events.
+- This layout design is responsive and works on mobile and desktop devices. On mobile devices I recommend to use Landscape mode (Horizontal orientation).
 
 ## Game rules 
 
@@ -62,15 +63,14 @@ jshint.com didn't show any problems.
 
 ### Performance Tests
 
-This game works perfectly fine on desktop computers. On mobile devices should also be no performance problems, except the control-button bug that needs to be fixed.
+This game works perfectly fine on desktop computers. Only older mobile devices could have difficulties running it. 
 I used Chrome-Lighthouse for this test.  
 
 ![desktop](https://mwresearch.github.io/merry-birds/doc_assets/lighthouse-desktop.png)
 
 ### Unfixed Bugs
 
-- For some strange reasons the bird is able to fly away at  the corner of the window. This way you can place the bird out of the window and overcome all the walls and cheat!
-- Control-buttons don’t work on some mobile devices for now.
+- For some strange reasons the bird is able to fly away at the corner of the window. This way you can place the bird out of the window and overcome all the walls and cheat!
 
 ## Deployment 
 
