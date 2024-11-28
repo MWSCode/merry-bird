@@ -50,7 +50,7 @@ const allowedKeys = [
 ];
 //
 
-function initial_values(){
+function initial_values() {
 	score_span.innerHTML = "0";
 	score = 0;
 	obstacle.speed = 2;
@@ -60,9 +60,9 @@ function initial_values(){
 	obstacle.y = 0;
 	obstacle.right = 0;
 	obstacle.total_count = 15;
-	
+
 	bird.hearts = 3;
-	
+
 	music_speed = 1;
 }
 
@@ -72,19 +72,19 @@ let animationInverval = null;
 let animation = {
 	speed: 1,
 	frame_duration: 25,
-	start(){
+	start() {
 		animationInverval = setInterval(animation_loop_func, this.frame_duration);
 	},
-	stop(){
+	stop() {
 		clearInterval(animationInverval);
 	},
 };
 //
 
 let obstacle = {
-	x: obstacle_div.offsetLeft, 
-	y: obstacle_div.offsetTop, 
-	width: obstacle_div.offsetWidth, 
+	x: obstacle_div.offsetLeft,
+	y: obstacle_div.offsetTop,
+	width: obstacle_div.offsetWidth,
 	height: obstacle_div.offsetHeight,
 	right: 1,
 	total_count: 5,
@@ -94,57 +94,61 @@ let obstacle = {
 }
 
 let bird = {
-	x: bird_div.offsetLeft, 
-	y: bird_div.offsetTop, 
-	width: bird_div.offsetWidth, 
+	x: bird_div.offsetLeft,
+	y: bird_div.offsetTop,
+	width: bird_div.offsetWidth,
 	height: bird_div.offsetHeight,
 	hearts: 5
 }
 
 
 // full-screen for mobile devices:
-var elem = document.getElementById("body_fc"); 
+var elem = document.getElementById("body_fc");
+
 function openFullscreen() {
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.webkitRequestFullscreen) { /* Safari */
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { /* IE11 */
-    elem.msRequestFullscreen();
-  }
+	if (elem.requestFullscreen) {
+		elem.requestFullscreen();
+	} else if (elem.webkitRequestFullscreen) {
+		/* Safari */
+		elem.webkitRequestFullscreen();
+	} else if (elem.msRequestFullscreen) {
+		/* IE11 */
+		elem.msRequestFullscreen();
+	}
 }
 
 
-function start_game(){
+function start_game() {
 	message_box.style.display = "none";
-	
+
 	initial_values();
-	
-	obstacle_div.style.height = obstacle.height+"%";
-	
+
+	obstacle_div.style.height = obstacle.height + "%";
+
 	obstacle_div.style.right = 0;
 	obstacle_div.style.top = 0;
-	
+
 	animation.start();
-	
+
 	sound_music.currentTime = 0;
 	sound_music2.currentTime = 0;
 	sound_music.play();
-	
+
 	bird_div.style.left = "50px";
 	bird_div.style.top = "calc(50% - 20px)";
 	bird.x = bird_div.offsetLeft;
 	bird.y = bird_div.offsetTop;
 }
-function game_won_message(){
+
+function game_won_message() {
 	animation.stop();
-	
-	for(let score_span of final_score_spans){
+
+	for (let score_span of final_score_spans) {
 		score_span.innerHTML = score;
 	}
-	
+
 	message_box.style.display = "flex";
-	for(let message_win of message_windows){
+	for (let message_win of message_windows) {
 		message_win.style.display = "none";
 	}
 	won_message.style.display = "block";
@@ -153,46 +157,49 @@ function game_won_message(){
 	sound_music2.pause();
 	sound_music2.currentTime = 0;
 }
-function crashed_message(){
+
+function crashed_message() {
 	stopFire();
 	message_box.style.display = "flex";
-	for(let message_win of message_windows){
+	for (let message_win of message_windows) {
 		message_win.style.display = "none";
 	}
 	hit_message.style.display = "block";
 }
-function continue_game(){
+
+function continue_game() {
 	obstacle.right = 0;
 	obstacle_div.style.right = 0;
 	obstacle.y = 0;
 	obstacle_div.style.top = 0;
 	obstacle_div.style.height = "15%";
 	message_box.style.display = "none";
-	
+
 	animation.start();
-	
-	if(music_speed == 1){
+
+	if (music_speed == 1) {
 		sound_music.currentTime = 0;
 		sound_music.play();
-	}else if(music_speed == 2){
+	} else if (music_speed == 2) {
 		sound_music2.currentTime = 0;
 		sound_music2.play();
 	}
-	
+
 	bird_div.style.left = "30px";
 	bird_div.style.top = "calc(50% - 20px)";
 	bird.x = bird_div.offsetLeft;
 	bird.y = bird_div.offsetTop;
 }
-function game_over_message(){
+
+function game_over_message() {
 	animation.stop();
-	
-	for(let score_span of final_score_spans){
+
+	for (let score_span of final_score_spans) {
 		score_span.innerHTML = score;
 	}
-	
+
 	message_box.style.display = "flex";
-	for(let message_win of message_windows){
+	for (let message_win of message_windows) {
 		message_win.style.display = "none";
 	}
 	gameOver_message.style.display = "block";
@@ -206,12 +213,12 @@ let key_pressed = "";
 document.addEventListener("keydown", key_event); // Arrow keys are only triggered by onkeydown, not onkeypress 
 document.addEventListener("keyup", key_released);
 
-function key_event(e){
+function key_event(e) {
 	//return e;
 	key_pressed = e.key;
 }
 
-function key_released(e){
+function key_released(e) {
 	//test_div.innerHTML = "released";
 	key_pressed = "";
 	//clearTimeout(key_timeout);
@@ -220,7 +227,7 @@ function key_released(e){
 function move(direction) {
 	let currentTopPx = parseInt(bird_div.offsetTop);
 	let currentLeftPx = parseInt(bird_div.offsetLeft);
-	
+
 	switch (direction) {
 		case "up":
 			currentTopPx -= 8;
@@ -237,7 +244,7 @@ function move(direction) {
 		default:
 			alert("Not a valid input");
 	}
-	
+
 	bird_div.style.top = currentTopPx + "px";
 	bird_div.style.left = currentLeftPx + "px";
 }
@@ -247,26 +254,22 @@ function move(direction) {
 const control_buttons = document.querySelectorAll("#buttons button");
 let mouseFireTimeout = null;
 var button_event = null;
-document.addEventListener("DOMContentLoaded", function() {
-	function startFire(e) {
-		mouseFireTimeout = setInterval(moveByButtonClick, 20);
-		button_event = e;
-	}
-	
+document.addEventListener("DOMContentLoaded", function () {
 	for (let button1 of control_buttons) {
 		button1.addEventListener("mousedown", startFire);
 		button1.addEventListener("mouseup", stopFire);
-		
+
 		button1.addEventListener("ontouchstart", startFire);
 		button1.addEventListener("ontouchend", stopFire);
 	}
-	function moveByButtonClick() {
-		let direction = button_event.target.getAttribute("data-direction");
-		move(direction);
-	}
 });
+
+function startFire(e) {
+	button_event = e;
+}
+
 function stopFire() {
-	clearInterval(mouseFireTimeout);
+	button_event = null;
 }
 //
 
@@ -274,12 +277,13 @@ function stopFire() {
 // get window dimensions:
 let window_width = null;
 let window_height = null;
+
 function get_window_dimensions() {
 	window_width = getComputedStyle(game_window).width;
-	window_width = Number(window_width.slice(0,-2));	// remove px
+	window_width = Number(window_width.slice(0, -2)); // remove px
 	window_height = getComputedStyle(game_window).height;
-	window_height = Number(window_height.slice(0,-2));
-	
+	window_height = Number(window_height.slice(0, -2));
+
 }
 get_window_dimensions();
 let resize_observer = new ResizeObserver(get_window_dimensions).observe(game_window);
@@ -287,11 +291,11 @@ let resize_observer = new ResizeObserver(get_window_dimensions).observe(game_win
 
 // render/animation loop:
 function animation_loop_func() {
-	
+
 	// processing player movement:
-	if (key_pressed != ""){
+	if (key_pressed != "") {
 		//key_pressed = e.key;
-		
+
 		if (allowedKeys.includes(key_pressed)) {
 			//e.preventDefault();
 			switch (key_pressed) {
@@ -308,140 +312,145 @@ function animation_loop_func() {
 					move("right");
 					break;
 			}
-		}		
+		}
 	}
-	
+	if(button_event != null){
+		let direction = button_event.target.getAttribute("data-direction");
+		move(direction);
+	}
+	//
+
 	hearts_span.innerHTML = bird.hearts;
-	
+
 	obstacle.x = obstacle_div.offsetLeft;
 	obstacle.y = obstacle_div.offsetTop;
 	obstacle.width = obstacle_div.offsetWidth;
 	obstacle.height = obstacle_div.offsetHeight;
-	
+
 	bird.x = bird_div.offsetLeft;
 	bird.y = bird_div.offsetTop;
 	bird.width = bird_div.offsetWidth;
 	bird.height = bird_div.offsetHeight;
-	
+
 	// keep the bird inside window
-	if(bird.x == 0 || bird.x < 0){
+	if (bird.x == 0 || bird.x < 0) {
 		bird_div.style.left = 0;
-	}else if(bird.y <= 0){
+	} else if (bird.y <= 0) {
 		bird_div.style.top = 0;
-	}else if (window_width <= (bird.x+bird.width)){
-		bird_div.style.left = window_width-bird.width+"px";
-	}else if(window_height <= (bird.y+bird.height)){
-		bird_div.style.top = window_height-bird.height+"px";
+	} else if (window_width <= (bird.x + bird.width)) {
+		bird_div.style.left = window_width - bird.width + "px";
+	} else if (window_height <= (bird.y + bird.height)) {
+		bird_div.style.top = window_height - bird.height + "px";
 	}
 	//
-	
+
 	// ### create/change/move wall and speed change:
-	obstacle.right = obstacle.right+obstacle.speed+obstacle.passed;		// change wall-speed
-	obstacle_div.style.right = obstacle.right+"px";		// move the wall
-	if((obstacle.right-20) > window_width){	// when wall passed the window, create new wall:
+	obstacle.right = obstacle.right + obstacle.speed + obstacle.passed; // change wall-speed
+	obstacle_div.style.right = obstacle.right + "px"; // move the wall
+	if ((obstacle.right - 20) > window_width) { // when wall passed the window, create new wall:
 		obstacle.right = 0;
 		obstacle.passed++;
-		
+
 		window_height = Math.ceil(window_height);
 		let obstacle_max_height = Math.floor(window_height - (bird.height + (window_height / 10)));
 		let obstacle_min_height = Math.floor(window_height / 5);
 		obstacle.height = Math.floor(Math.random() * (obstacle_max_height - obstacle_min_height)) + obstacle_min_height;
 		//obstacle.height = obstacle_min_height;
-		
+
 		// choose top or bottom position of the wall
-		if(obstacle.topBottom == 1){
+		if (obstacle.topBottom == 1) {
 			obstacle.y = 0;
-		}else{
+		} else {
 			obstacle.y = window_height - obstacle.height;
 		}
 		obstacle.topBottom = Math.round(Math.random());
-		
-		obstacle_div.style.top = obstacle.y+"px";
-		obstacle_div.style.height = obstacle.height+"px";
-		
+
+		obstacle_div.style.top = obstacle.y + "px";
+		obstacle_div.style.height = obstacle.height + "px";
+
 		score = obstacle.passed * bird.hearts;
 		score_span.innerHTML = score;
 	}
 	//
-	
+
 	// set music type / speed
-	if(obstacle.passed >= 10){
+	if (obstacle.passed >= 10) {
 		music_speed = 2;
 		sound_music.playbackRate = 1;
 		sound_music.pause();
 		sound_music.currentTime = 0;
-		
+
 		sound_music2.play();
-		
+
 	}
-	if(obstacle.passed > 5 && obstacle.passed < 10){
+	if (obstacle.passed > 5 && obstacle.passed < 10) {
 		music_speed = 1;
 		sound_music.playbackRate = 2;
 		sound_music.play();
-		
+
 		sound_music2.pause();
 		sound_music2.currentTime = 0;
 	}
-	if(obstacle.passed >= 0 && obstacle.passed <= 5){
+	if (obstacle.passed >= 0 && obstacle.passed <= 5) {
 		music_speed = 1;
 		sound_music.playbackRate = 1;
 		sound_music.play();
 		//positionXY.innerHTML = "1 divar raft";
 	}
 	//
-	
-	for(let walls_span of walls_spans){
+
+	for (let walls_span of walls_spans) {
 		walls_span.innerHTML = obstacle.passed;
 	}
-	
+
 	// collision detection
 	let collided = collision(bird, obstacle);
-	if(collided == !false){	// when collided
-		if(lastFrameCollision == 0){		// don't count collision if collision already happened
-			
+	if (collided == !false) { // when collided
+		if (lastFrameCollision == 0) { // don't count collision if collision already happened
+
 			bird_div.style.background = "url('assets/images/merry-bird-crash.gif')";
-			
-			if(sound_crash.paused && !collision_soundPlayed){	// prevent repeated playbacks
+
+			if (sound_crash.paused && !collision_soundPlayed) { // prevent repeated playbacks
 				sound_crash.play();
 				collision_soundPlayed = 1;
-				
+
 			}
-			
+
 			//timer.stop();
 			animation.stop();
 			sound_music.pause();
 			sound_music.currentTime = 0;
 			sound_music2.pause();
 			sound_music2.currentTime = 0;
-			
+
 			bird.hearts--;
 			obstacle.speed++;
 			hearts_span.innerHTML = bird.hearts;
 			hearts_span2.innerHTML = bird.hearts;
 			crashed_message();
-			
+
 		}
 		lastFrameCollision = 1;
-		
-	}else{
+
+	} else {
 		bird_div.style.background = 'url("assets/images/merry-bird.gif")';
 		collision_soundPlayed = 0;
 		lastFrameCollision = 0;
 	}
 	//
-	
+
 	// when won:
-	if(obstacle.passed == obstacle.total_count){
+	if (obstacle.passed == obstacle.total_count) {
 		game_won_message();
 	}
 	//
-	
+
 	// when game-over:
-	if(bird.hearts <= 0){
+	if (bird.hearts <= 0) {
 		game_over_message();
 	}
 	//
-	
+
 }
 
 function collision(a, b) {
