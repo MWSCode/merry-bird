@@ -281,6 +281,19 @@ audio {
 
 /* #####  Media query: small-screen devices like tablets or phones (below-1024px) */
 @media screen and (max-width: 1024px) {
+	* {
+		font-size: 20px;
+	}
+	h2 {
+		font-size: 1.8rem;
+	}
+	h1 {
+		font-size: 2.5rem;
+	}
+	.message_buttons button {
+		font-size: 1.7rem;
+	}
+
 	main {
 		display: flex;
 		flex-direction: column;
@@ -314,5 +327,19 @@ audio {
 	
 	.footer {
 		display: none;
+	}
+}
+@media screen and (min-width: 1024px) and (max-height: 670px) and (orientation : landscape) {
+	* {
+		font-size: 18px;
+	}
+	h2 {
+		font-size: 1.8rem;
+	}
+	h1 {
+		font-size: 2.5rem;
+	}
+	.message_buttons button {
+		font-size: 1.7rem;
 	}
 }
