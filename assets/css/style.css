@@ -16,6 +16,7 @@
 	font-weight: 500;
 	font-size: 22px;
 	user-select: none;
+	touch-action: manipulation;
 }
 
 body {
@@ -54,6 +55,7 @@ p {
 	display: flex;
 	gap: 15px;
     align-items: center;
+	margin: 0 30px;
 }
 #info_display * {
 	font: var(--font_lilita_h2);

@@ -252,25 +252,6 @@ function move(direction) {
 }
 //
 
-// Mouse-control - kaar nemide dorost...
-//document.addEventListener("mousemove", moveByMouse);
-function moveByMouse(e){
-	let x = Math.floor(e.offsetX);
-	let y = Math.floor(e.offsetY);
-	
-	// prevent moving too fast 
-	/**/if((Math.abs(mouse_x_old) - Math.abs(x) <= 10) || (Math.abs(mouse_y_old) - Math.abs(y)) <= 10){
-		bird_div.style.left = x + "px";
-		bird_div.style.top = y + "px";
-		mouse_x_old = x;
-		mouse_y_old = y;
-	}else{
-		bird_div.style.left = x + "px";
-		bird_div.style.top = y + "px";
-	}
-}
-
-
 // BUTTON-control
 const control_buttons = document.querySelectorAll("#buttons button");
 const mouse_fireRate = 20;
@@ -329,14 +310,14 @@ function render(time) {
 	bird.width = bird_div.offsetWidth;
 	bird.height = bird_div.offsetHeight;
 	
-	/**/
+	/*
 	// make the collision surface of the bird smaller
 	bird.y = bird.y+10;	
 	bird.height = bird.height - 20;
 	bird.x = bird.x + 10;
 	bird.width = bird.width - 20;
 	//
-	
+	*/
 	
 	// keep the bird inside window
 	if(bird.x == 0 || bird.x < 0){
