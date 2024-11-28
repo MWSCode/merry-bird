@@ -10,7 +10,7 @@ Indeed, this is my first more or less serious computer game that I’ve created.
 
 This game is suitable for all enthusiasts of all ages.
 
-## Specifications
+## Specifications and requirements
 
 - This game works with all modern Webbrowsers that support Javascript ES6 version and HTML5+CSS3.
 - Your mobile web browser should also support js touch events.
