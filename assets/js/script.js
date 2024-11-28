@@ -259,8 +259,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		button1.addEventListener("mousedown", startFire);
 		button1.addEventListener("mouseup", stopFire);
 
-		button1.addEventListener("ontouchstart", startFire);
-		button1.addEventListener("ontouchend", stopFire);
+		button1.addEventListener("touchstart", startFire);
+		button1.addEventListener("touchend", stopFire);
 	}
 });
 
