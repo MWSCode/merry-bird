@@ -1,6 +1,6 @@
 # Merry Bird
 
-![Responsive Mockup](https://mwresearch.github.io/doc_assets/cover.webp)
+![Responsive Mockup](https://mwresearch.github.io/merry-birds/doc_assets/cover.webp)
 
 Why bother with angry birds when there are happy birds too?  
 This is Merry-Bird, a simple javascript game that’s meant to be funny and relaxing. That’s all.
