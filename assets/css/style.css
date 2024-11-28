@@ -4,19 +4,20 @@
 /* CSS Variables */
 :root {
     --font-roboto: "Roboto", sans-serif;
-	--font_lilita_h1: 400 2.3rem Lilita One, sans-serif;
-	--font_lilita_h2: 400 1.5rem Lilita One, sans-serif;
+	--font_lilita_h1: 400 2.3rem "Lilita One", sans-serif;
+	--font_lilita_h2: 400 1.5rem "Lilita One", sans-serif;
 }
 
 /* overriding default styles */
 * {
     padding: 0;
     margin: 0;
-	font-family: var(--font-roboto);
+	font-family: Roboto, sans-serif;
 	font-weight: 500;
 	font-size: 22px;
 	user-select: none;
 	touch-action: manipulation;
+	color: black;
 }
 
 body {
@@ -38,12 +39,12 @@ main {
 }
 
 h1 {
-	font: var(--font_lilita_h1);
+	font: 400 2.3rem "Lilita One", sans-serif;
 	font-size: 3rem;
 	margin-bottom: 15px;
 }
 h2 {
-	font: var(--font_lilita_h1);
+	font: 400 2.3rem "Lilita One", sans-serif;
 	font-size: 2rem;
 	margin-bottom: 10px;
 }
@@ -58,7 +59,7 @@ p {
 	margin: 0 30px;
 }
 #info_display * {
-	font: var(--font_lilita_h2);
+	font: 400 1.5rem "Lilita One", sans-serif;
 	font-weight: 400;
 	font-style: normal;
 }
@@ -105,7 +106,7 @@ p {
 #bird {
 	width: 80px;
 	height: 60px;
-	background: blue;
+	background: url(../images/merry-bird.gif);
 	border-radius: 0%;
 	position: absolute;
 	top: calc(50% - 20px);
@@ -121,7 +122,6 @@ p {
 	top: 0;
 	width: 40px;
 	height: 20px;
-	background-color: ;
 	user-select: none;
 	background: #c03800 url("../images/brick.gif") top /contain repeat-y ;
 }
@@ -172,7 +172,7 @@ p {
     border-radius: 8px;
     background-color: #006011;
     color: #fff;
-    font: var(--font_lilita_h1);
+    font: 400 2.3rem "Lilita One", sans-serif;
 	border: 4px solid #004011;
 	border-top: 4px solid #00a91e;
 	border-left: 4px solid #00a91e;
@@ -264,6 +264,21 @@ audio {
 	background-position: 53%;
 }
 
+.fullscreen {
+	padding: 5px 16px;
+    cursor: pointer;
+    background-color: #d1d1d1;
+    border-radius: 5px;
+}
+
+.footer {
+	text-align: center;
+	padding: 20px;
+}
+.footer a {
+	text-decoration: none;
+	color: black;
+}
 
 /* #####  Media query: small-screen devices like tablets or phones (below-1024px) */
 @media screen and (max-width: 1024px) {
@@ -298,4 +313,7 @@ audio {
 		display: none;
 	}
 	
+	.footer {
+		display: none;
+	}
 }
