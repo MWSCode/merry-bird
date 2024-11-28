@@ -97,8 +97,7 @@ I played the music on a free DAW software and whistled with it.
 ### Tools and services used:
 I’ve used a font from https://fonts.google.com.   
 Photo-editing software: https://photopea.com  
-For the Favicons: https://favicon.io  
-For the Device-Mockup image: https://techsini.com/multi-mockup  
+For the Favicons: https://favicon.io   
 Code editor: Gitpod Code editor  
 
 Code was created using information provided by Codeinstitute, W3school , Stackoverflow , Youtube and myself.
