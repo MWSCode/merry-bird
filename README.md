@@ -1,6 +1,6 @@
 # Merry Bird
 
-![Cover image](https://mwresearch.github.io/merry-birds/doc_assets/cover.webp)
+![Cover image](https://mwscode.github.io/merry-birds/doc_assets/cover.webp)
 
 Why bother with angry birds when there are happy birds too?  
 This is Merry-Bird, a simple javascript game that’s meant to be funny and relaxing. That’s all.
@@ -28,17 +28,17 @@ This game is simple and self explanatory. Here you can see some screenshots from
 
 __The Desktop view:__
 
-![Nav Bar](https://mwresearch.github.io/merry-birds/doc_assets/dekstop-view.jpeg)
+![Nav Bar](https://mwscode.github.io/merry-birds/doc_assets/dekstop-view.jpeg)
 
 __On mobile devices:__
 
-![Nav Bar](https://mwresearch.github.io/merry-birds/doc_assets/mobile-view.png)
+![Nav Bar](https://mwscode.github.io/merry-birds/doc_assets/mobile-view.png)
 
-![Nav Bar](https://mwresearch.github.io/merry-birds/doc_assets/start-message.jpeg)
+![Nav Bar](https://mwscode.github.io/merry-birds/doc_assets/start-message.jpeg)
 
-![Nav Bar](https://mwresearch.github.io/merry-birds/doc_assets/hit-message.jpeg)
+![Nav Bar](https://mwscode.github.io/merry-birds/doc_assets/hit-message.jpeg)
 
-![Nav Bar](https://mwresearch.github.io/merry-birds/doc_assets/won-message.jpeg)
+![Nav Bar](https://mwscode.github.io/merry-birds/doc_assets/won-message.jpeg)
 
 ### Features Left to Implement
 
@@ -54,10 +54,10 @@ I will add more game levels and rules and features in future versions, to make t
 
 - HTML  
 No errors were returned when passing through the official html validator:   
-![html pass](https://mwresearch.github.io/merry-birds/doc_assets/html-valid.png)
+![html pass](https://mwscode.github.io/merry-birds/doc_assets/html-valid.png)
 - CSS  
 No errors were found when passing through the official  css validator:  
-![css pass](https://mwresearch.github.io/merry-birds/doc_assets/css-valid.png)
+![css pass](https://mwscode.github.io/merry-birds/doc_assets/css-valid.png)
 - JS  
 jshint.com didn't show any problems.
 
@@ -66,11 +66,11 @@ jshint.com didn't show any problems.
 This game works perfectly fine on desktop computers. Only older mobile devices could have difficulties running it. 
 I used Chrome-Lighthouse for this test.  
 
-![desktop](https://mwresearch.github.io/merry-birds/doc_assets/lighthouse-desktop.png)
+![desktop](https://mwscode.github.io/merry-birds/doc_assets/lighthouse-desktop.png)
 
-### Unfixed Bugs
+### Fixed Bugs
 
-- For some strange reasons the bird is able to fly away at the corner of the window. This way you can place the bird out of the window and overcome all the walls and cheat!
+- For some reasons the bird was able to fly away at the corner of the window. This way you can place the bird out of the window and overcome all the walls and cheat! This is fixed now 07.12.2024.
 
 ## Deployment 
 
@@ -79,7 +79,7 @@ I used Chrome-Lighthouse for this test.
   - From the source section drop-down menu, select the Master Branch
   - Once the master branch has been selected, the page will be automatically refreshed with a detailed ribbon display to indicate the successful deployment. 
 
-The live link can be found here - https://mwresearch.github.io/merry-birds/
+The live link can be found here - https://mwscode.github.io/merry-birds/
 
 
 ## Credits 
